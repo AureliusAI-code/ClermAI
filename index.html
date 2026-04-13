@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClermAI — Terminal AI</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  background:#020202;
+  font-family:'JetBrains Mono',monospace;
+  color:#00ffae;
+}
+
+/* grid */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(0,255,170,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,170,0.05) 1px, transparent 1px);
+  background-size:40px 40px;
+  z-index:-2;
+}
+
+/* glow orb background */
+body::after{
+  content:"";
+  position:fixed;
+  top:-200px;
+  left:50%;
+  transform:translateX(-50%);
+  width:900px;
+  height:900px;
+  background:radial-gradient(circle,rgba(0,255,170,0.08),transparent 70%);
+  z-index:-3;
+}
+
+.glow{
+  box-shadow:0 0 80px rgba(0,255,170,0.15);
+}
+
+.terminal-box{
+  background:rgba(0,0,0,0.85);
+  border:1px solid rgba(0,255,170,0.25);
+}
+
+.cursor{
+  display:inline-block;
+  width:10px;
+  height:18px;
+  background:#00ffae;
+  margin-left:4px;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:1;}
+  50%{opacity:0;}
+}
+</style>
+</head>
+
+<body class="text-sm">
+
+<!-- NAV -->
+<nav class="fixed w-full border-b border-green-900/40 bg-black/70 backdrop-blur z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+    <div class="tracking-widest">CLERMAI</div>
+    <a href="https://x.com/clerm_ai" target="_blank" class="hover:text-white transition">
+      @Clerm_AI
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-40 pb-32 px-6 text-center">
+
+  <h1 class="text-4xl mb-6 tracking-widest text-green-400">
+    TERMINAL INTELLIGENCE
+  </h1>
+
+  <p class="text-green-600 mb-16 max-w-xl mx-auto">
+    AI agents built for command-driven execution.
+  </p>
+
+  <!-- TERMINAL -->
+  <div class="terminal-box glow rounded-lg p-8 max-w-3xl mx-auto text-left">
+
+    <div id="output" class="leading-7 mb-4">
+      booting ClermAI kernel...<br>
+      loading neural modules...<br>
+      establishing secure channel...<br>
+      system ready.<br>
+      type 'help'
+    </div>
+
+    <div>
+      <span>> </span>
+      <input id="input" autofocus class="bg-transparent outline-none w-3/4"/>
+      <span class="cursor"></span>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+<section class="py-32 border-t border-green-900/40 text-center px-6">
+
+  <h2 class="text-2xl mb-16 tracking-widest text-green-400">
+    CORE SYSTEM
+  </h2>
+
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+
+    <div class="terminal-box p-8 rounded-lg">
+      <h3 class="mb-3 text-green-300">COMMAND FIRST</h3>
+      <p class="text-green-700">No dashboards. Pure execution.</p>
+    </div>
+
+    <div class="terminal-box p-8 rounded-lg">
+      <h3 class="mb-3 text-green-300">AI AGENTS</h3>
+      <p class="text-green-700">Autonomous task processing.</p>
+    </div>
+
+    <div class="terminal-box p-8 rounded-lg">
+      <h3 class="mb-3 text-green-300">LIGHTWEIGHT CORE</h3>
+      <p class="text-green-700">Fast. Minimal. Secure.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-32 border-t border-green-900/40 text-center px-6">
+
+<h2 class="text-2xl mb-20 tracking-widest text-green-400">
+SYSTEM FLOW
+</h2>
+
+<div class="max-w-5xl mx-auto grid md:grid-cols-4 gap-8 text-green-700">
+
+<div class="terminal-box p-6 rounded-lg">COMMAND</div>
+
+<div class="terminal-box p-6 rounded-lg">AGENT</div>
+
+<div class="terminal-box p-6 rounded-lg">EXECUTION</div>
+
+<div class="terminal-box p-6 rounded-lg">RESULT</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+<section class="py-32 border-t border-green-900/40 text-center">
+
+  <h2 class="text-3xl mb-8 text-green-400 tracking-widest">
+    ACCESS GRANTED
+  </h2>
+
+  <a href="https://x.com/derionhq" target="_blank"
+     class="border border-green-500 px-8 py-3 rounded hover:bg-green-500 hover:text-black transition">
+     FOLLOW DEVELOPMENT
+  </a>
+
+</section>
+
+<footer class="text-center py-12 border-t border-green-900/40 text-green-800">
+CLERMAI © 2026
+</footer>
+
+<script>
+const output=document.getElementById("output");
+const input=document.getElementById("input");
+
+input.addEventListener("keydown",function(e){
+ if(e.key==="Enter"){
+   const cmd=input.value;
+   output.innerHTML+="<br>> "+cmd+"<br>";
+   handle(cmd);
+   input.value="";
+   window.scrollTo(0,document.body.scrollHeight);
+ }
+});
+
+function handle(cmd){
+
+ if(cmd==="help"){
+   output.innerHTML+=`
+commands:<br>
+about — info about ClermAI<br>
+agents — show agent status<br>
+status — system status<br>
+x — open twitter<br>
+clear — clear terminal<br><br>`;
+ }
+
+ else if(cmd==="about"){
+   output.innerHTML+="ClermAI — terminal-native AI agent execution system.<br>";
+ }
+
+ else if(cmd==="agents"){
+   output.innerHTML+="active agents: 3<br>task queue: running<br>";
+ }
+
+ else if(cmd==="status"){
+   output.innerHTML+="system status: operational<br>latency: 12ms<br>";
+ }
+
+ else if(cmd==="x"){
+   window.open("https://x.com/clerm_ai","_blank");
+ }
+
+ else if(cmd==="clear"){
+   output.innerHTML="";
+ }
+
+ else{
+   output.innerHTML+="unknown command<br>";
+ }
+}
+</script>
+
+</body>
+</html>
